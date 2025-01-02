@@ -1,15 +1,15 @@
 {
-    "name": "@magictm/strapi-plugin-tiptap-editor",
-    "version": "0.1.7",
+    "name": "@ssupat/tiptap-editor",
+    "version": "0.0.1",
     "description": "Replaces default Strapi editor with Tiptap editor.",
     "scripts": {
-        "npm:publish": "npm publish --access public"
+        "npm:publish": "npm publish"
     },
     "strapi": {
         "name": "tiptap-editor",
         "description": "Replaces default Strapi editor with Tiptap editor.",
         "kind": "plugin",
-        "displayName": "MagicTM · Tiptap Editor"
+        "displayName": "SSUPAT · Tiptap Editor"
     },
     "dependencies": {
         "@chakra-ui/anatomy": "^2.3.4",
@@ -55,11 +55,11 @@
         "react-icons": "^4.7.1"
     },
     "author": {
-        "name": "Marcin Stawowczyk (m7rlin)"
+        "name": "michal varyš (michalvarys)"
     },
     "maintainers": [
         {
-            "name": "Marcin Stawowczyk (m7rlin)"
+            "name": "michal varyš (michalvarys)"
         }
     ],
     "engines": {
@@ -69,12 +69,12 @@
     "license": "LGPL-2.1",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/magictm/strapi-plugin-tiptap-editor.git"
+        "url": "git+https://github.com/michalvarys/uat-tiptap-editor.git"
     },
     "bugs": {
-        "url": "https://github.com/magictm/strapi-plugin-tiptap-editor/issues"
+        "url": "https://github.com/michalvarys/uat-tiptap-editor/issues"
     },
-    "homepage": "https://github.com/magictm/strapi-plugin-tiptap-editor#readme",
+    "homepage": "https://github.com/michalvarys/uat-tiptap-editor#readme",
     "keywords": [
         "strapi",
         "strapi v4",
