@@ -1,6 +1,6 @@
 {
     "name": "@ssupat/tiptap-editor",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "Replaces default Strapi editor with Tiptap editor.",
     "scripts": {
         "npm:publish": "npm publish --access public"

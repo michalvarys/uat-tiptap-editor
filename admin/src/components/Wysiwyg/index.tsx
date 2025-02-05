@@ -47,6 +47,7 @@ import HorizontalRuleExtension from '@tiptap/extension-horizontal-rule'
 import CharacterCounter from './CharacterCounter'
 import { CustomLink } from './plugins/LinkButon'
 import { AccordionExtension } from './plugins/accordin/AccordionExtension'
+import { HTMLCodeBlockExtension } from './plugins/code/HTMLCodeBlockExtension'
 
 const Wysiwyg = (opts) => {
     const {
@@ -80,6 +81,7 @@ const Wysiwyg = (opts) => {
 
     const editor = useEditor({
         extensions: [
+            HTMLCodeBlockExtension,
             AccordionExtension,
             DocumentExtension,
             ParagraphExtension,
