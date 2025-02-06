@@ -48,6 +48,7 @@ import CharacterCounter from './CharacterCounter'
 import { CustomLink } from './plugins/LinkButon'
 import { AccordionExtension } from './plugins/accordin/AccordionExtension'
 import { HTMLCodeBlockExtension } from './plugins/code/HTMLCodeBlockExtension'
+import { BoxExtension } from './plugins/box/BoxExtension'
 
 const Wysiwyg = (opts) => {
     const {
@@ -81,6 +82,7 @@ const Wysiwyg = (opts) => {
 
     const editor = useEditor({
         extensions: [
+            BoxExtension,
             HTMLCodeBlockExtension,
             AccordionExtension,
             DocumentExtension,

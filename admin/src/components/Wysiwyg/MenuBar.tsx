@@ -43,6 +43,7 @@ import { FaLink as ButtonLinkIcon, FaChevronDown } from "react-icons/fa";
 import React, { useState } from "react";
 import LinkButton from "./plugins/LinkButon";
 import { TableControls } from "./plugins/table/TableControls";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 
 const onHeadingChange = (editor, type) => {
     switch (type) {
@@ -239,16 +240,6 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                     </IconButtonGroup>
 
                     <IconButtonGroup className="button-group">
-                        {/* <IconButton
-                            icon={<CodeIcon />}
-                            label="Code"
-                            className={[
-                                "large-icon",
-                                editor.isActive("code") ? "is-active" : "",
-                            ]}
-                            onClick={() => editor.chain().focus().toggleCode().run()}
-                            disabled={!editor.can().chain().focus().toggleCode().run()}
-                        /> */}
                         <IconButton
                             icon={<BiCodeBlockIcon />}
                             label="Code Block"
@@ -310,6 +301,13 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                                 editor?.commands.setHTMLCodeBlock("");
                             }}
                         />
+
+                        <IconButton
+                            icon={<PlusSquareIcon />}
+                            label="Add Box"
+                            onClick={() => editor.chain().focus().setBox({}).run()}
+                        />
+
                     </IconButtonGroup>
 
                     {/* UNDO / REDO */}
