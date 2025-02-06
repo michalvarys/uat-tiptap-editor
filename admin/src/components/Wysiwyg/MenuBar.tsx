@@ -42,6 +42,7 @@ import { FaRemoveFormat as RemoveFormatIcon } from "react-icons/fa";
 import { FaLink as ButtonLinkIcon, FaChevronDown } from "react-icons/fa";
 import React, { useState } from "react";
 import LinkButton from "./plugins/LinkButon";
+import { TableControls } from "./plugins/table/TableControls";
 
 const onHeadingChange = (editor, type) => {
     switch (type) {
@@ -268,25 +269,7 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() => editor.chain().focus().toggleBlockquote().run()}
                         />
 
-                        <IconButton
-                            icon={<AiOutlineTable />}
-                            label="Table"
-                            className={[
-                                "large-icon",
-                                editor.isActive("table") ? "is-active" : "",
-                            ]}
-                            onClick={() =>
-                                editor
-                                    .chain()
-                                    .focus()
-                                    .insertTable({
-                                        cols: 3,
-                                        row: 3,
-                                        withHeaderRow: false,
-                                    })
-                                    .run()
-                            }
-                        />
+                        <TableControls editor={editor} />
 
                         <IconButton
                             icon={<AiOutlineLine />}
@@ -295,15 +278,6 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             onClick={() => editor.chain().focus().setHorizontalRule().run()}
                         />
 
-                        {/* <IconButton
-                            icon={<LinkIcon />}
-                            label="Link"
-                            className={[
-                                'medium-icon',
-                                editor.isActive('link') ? 'is-active' : '',
-                            ]}
-                            onClick={() => openLinkDialog()}
-                        /> */}
                         <IconButton
                             icon={<RemoveFormatIcon />}
                             label="Remove formating"
