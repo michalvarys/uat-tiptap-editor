@@ -59,7 +59,7 @@ export const HTMLCodeBlockComponent: React.ComponentType<NodeViewProps> = ({
             {preview ? (
               <HTMLCodeBlockView htmlContent={htmlContent} />
             ) : (
-              <Box>{htmlContent}</Box>
+              <pre>{htmlContent}</pre>
             )}
           </GridItem>
 
