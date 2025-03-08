@@ -12,7 +12,6 @@ import {
     NumberInput,
     Select,
     Option,
-    Switch,
     TextInput,
     Tabs,
     Tab,
@@ -21,40 +20,12 @@ import {
     TabPanels,
 } from "@strapi/design-system"
 import { BoxAttributes } from './BoxExtension'
-import { IconButton, Box } from '@chakra-ui/react';
+import { IconButton, Box, Switch, FormLabel } from '@chakra-ui/react';
 import { EditIcon } from '@chakra-ui/icons';
 import { FaCogs } from 'react-icons/fa';
 import { GrMoreVertical } from 'react-icons/gr';
-import { colors } from '@ssupat/components'
-
-const ColorOption = ({ color, label, value }: { color: string, label: string, value: string }) => {
-    // Získání skutečné barvy pro náhled
-    const getColorValue = (colorKey: string) => {
-        if (!colorKey) return undefined;
-        if (colors[colorKey]) return colors[colorKey];
-        const [group, shade] = colorKey.split('.');
-        return colors[group]?.[shade];
-    };
-
-    const colorValue = getColorValue(value);
-
-    return (
-        <Option value={value}>
-            <Flex alignItems="center" gap={2}>
-                <Box
-                    style={{
-                        width: '16px',
-                        height: '16px',
-                        borderRadius: '3px',
-                        backgroundColor: colorValue,
-                        border: '1px solid rgba(0,0,0,0.1)',
-                    }}
-                />
-                {label}
-            </Flex>
-        </Option>
-    );
-};
+import { ColorsSelect } from '../ColorSelect';
+import { getChakraStyles } from '../../tools';
 
 const ResponsiveTab = ({
     attributes,
@@ -65,97 +36,21 @@ const ResponsiveTab = ({
     onChange: (attrs: Partial<BoxAttributes>) => void,
     breakpoint: string
 }) => {
-    const getColorOptions = () => (
-        <>
-            <Option value="">None</Option>
-
-            {/* Base Colors */}
-            <Option value="none" disabled>── Base Colors ──</Option>
-            {['transparent', 'current', 'black', 'white'].map(color => (
-                <ColorOption
-                    key={color}
-                    value={color}
-                    label={color}
-                    color={colors[color]}
-                />
-            ))}
-
-            {/* Brand Colors */}
-            <Option value="none" disabled>── Brand Colors ──</Option>
-            {['uat_dark', 'uat_light', 'uat_green', 'uat_orange'].map(color => (
-                <ColorOption
-                    key={color}
-                    value={color}
-                    label={color}
-                    color={colors[color]}
-                />
-            ))}
-
-            {/* Alpha Colors */}
-            {['whiteAlpha', 'blackAlpha'].map(colorGroup => (
-                <React.Fragment key={colorGroup}>
-                    <Option value="none" disabled>{`── ${colorGroup} ──`}</Option>
-                    {Object.keys(colors[colorGroup]).map(shade => (
-                        <ColorOption
-                            key={`${colorGroup}.${shade}`}
-                            value={`${colorGroup}.${shade}`}
-                            label={`${colorGroup} ${shade}`}
-                            color={colors[colorGroup][shade]}
-                        />
-                    ))}
-                </React.Fragment>
-            ))}
-
-            {/* Primary Colors */}
-            {['gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'cyan', 'purple', 'pink'].map(colorGroup => (
-                <React.Fragment key={colorGroup}>
-                    <Option value="none" disabled>{`── ${colorGroup} ──`}</Option>
-                    {Object.keys(colors[colorGroup]).map(shade => (
-                        <ColorOption
-                            key={`${colorGroup}.${shade}`}
-                            value={`${colorGroup}.${shade}`}
-                            label={`${colorGroup} ${shade}`}
-                            color={colors[colorGroup][shade]}
-                        />
-                    ))}
-                </React.Fragment>
-            ))}
-
-            {/* Social Colors */}
-            {['linkedin', 'facebook', 'messenger', 'whatsapp', 'twitter', 'telegram'].map(colorGroup => (
-                <React.Fragment key={colorGroup}>
-                    <Option value="none" disabled>{`── ${colorGroup} ──`}</Option>
-                    {Object.keys(colors[colorGroup]).map(shade => (
-                        <ColorOption
-                            key={`${colorGroup}.${shade}`}
-                            value={`${colorGroup}.${shade}`}
-                            label={`${colorGroup} ${shade}`}
-                            color={colors[colorGroup][shade]}
-                        />
-                    ))}
-                </React.Fragment>
-            ))}
-        </>
-    );
 
     return (
         <Box padding={4}>
             <Grid gap={4} gridCols={2}>
-                <Select
+                <ColorsSelect
                     label="Background"
                     value={attributes.bg || ''}
                     onChange={value => onChange({ ...attributes, bg: value })}
-                >
-                    {getColorOptions()}
-                </Select>
+                />
 
-                <Select
+                <ColorsSelect
                     label="Color"
                     value={attributes.color || ''}
                     onChange={value => onChange({ ...attributes, color: value })}
-                >
-                    {getColorOptions()}
-                </Select>
+                />
 
                 <NumberInput
                     label="Border Radius"
@@ -264,17 +159,20 @@ export const BoxComponent: React.FC<BoxProps> = ({ node: { attrs }, updateAttrib
         borderColor: attributes.borderColor,
     })
 
+    const stackStyles = getChakraStyles(attrs);
+
     return (
         <NodeViewWrapper>
             <Box
                 pos="relative"
-                sx={getStyles(attrs)}
-                paddingLeft={4}
-                border="1px dotted gray"
+                border="1px dotted"
+                borderColor="uat_orange"
+                px={6}
+                py={2}
             >
                 <IconButton
                     pos="absolute"
-                    left={0}
+                    right={0}
                     top={2}
                     icon={<GrMoreVertical />}
                     size="xs"
@@ -284,8 +182,9 @@ export const BoxComponent: React.FC<BoxProps> = ({ node: { attrs }, updateAttrib
                     aria-label="Settings"
                     onClick={() => setIsModalOpen(true)}
                 />
-
-                <NodeViewContent />
+                <Box sx={stackStyles}>
+                    <NodeViewContent />
+                </Box>
             </Box>
 
             <Dialog
@@ -301,20 +200,22 @@ export const BoxComponent: React.FC<BoxProps> = ({ node: { attrs }, updateAttrib
                 }}>
                     <Flex direction="column" gap={4}>
                         <Box padding={2}>
-                            <Switch
-                                label="Use Flex"
-                                selected={currentAttrs.isFlex}
-                                onChange={() => setCurrentAttrs(prev => ({ ...prev, isFlex: !prev.isFlex }))}
-                            />
+                            <FormLabel color="white" display="flex" gap={2}>
+                                Use Flex
+                                <Switch
+                                    checked={currentAttrs.isFlex}
+                                    onChange={() => setCurrentAttrs(prev => ({ ...prev, isFlex: !prev.isFlex }))}
+                                />
+                            </FormLabel>
                         </Box>
 
                         <TabGroup style={{ width: '100%' }}>
                             <Tabs style={{ position: 'sticky', top: 0, zIndex: 1 }}>
                                 <Tab>Default</Tab>
-                                <Tab>SM</Tab>
+                                {/* <Tab>SM</Tab>
                                 <Tab>MD</Tab>
                                 <Tab>LG</Tab>
-                                <Tab>XL</Tab>
+                                <Tab>XL</Tab> */}
                             </Tabs>
                             <TabPanels>
                                 <TabPanel>

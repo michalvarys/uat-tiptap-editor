@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { NodeViewWrapper, NodeViewContent } from '@tiptap/react'
+import { NodeViewWrapper, NodeViewContent, NodeViewProps } from '@tiptap/react'
 import {
   Accordion,
   AccordionItem,
@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import { AccordionIcon } from '@chakra-ui/icons'
 
-interface AccordionComponentProps {
+type AccordionComponentProps = NodeViewProps & {
   node: {
     attrs: {
       title: string
@@ -20,7 +20,7 @@ interface AccordionComponentProps {
   updateAttributes: (attrs: { title: string }) => void
 }
 
-export const AccordionComponent: React.FC<AccordionComponentProps> = ({
+export const AccordionComponent: React.ComponentType<AccordionComponentProps> = ({
   node: {
     attrs: { title },
   },

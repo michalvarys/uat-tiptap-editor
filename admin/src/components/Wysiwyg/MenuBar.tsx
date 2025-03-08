@@ -44,6 +44,8 @@ import React, { useState } from "react";
 import LinkButton from "./plugins/LinkButon";
 import { TableControls } from "./plugins/table/TableControls";
 import { PlusSquareIcon } from "@chakra-ui/icons";
+import SvgStack from "@strapi/icons/Stack.js";
+import TabIcon from "@strapi/icons/Blocks.js";
 
 const onHeadingChange = (editor, type) => {
     switch (type) {
@@ -302,10 +304,26 @@ const MenuBar = ({ editor, debug, setDebug, playground }) => {
                             }}
                         />
 
-                        <IconButton
+                        {/* <IconButton
                             icon={<PlusSquareIcon />}
-                            label="Add Box"
+                            label="Přidat Box"
                             onClick={() => editor.chain().focus().setBox({}).run()}
+                        />
+
+                        <IconButton
+                            icon={<SvgStack />}
+                            label="Přidat Stack"
+                            onClick={() => editor.chain().focus().setStack({}).run()}
+                        /> */}
+
+                        <IconButton
+                            icon={<TabIcon />}
+                            label="Přidat Taby"
+                            onClick={() => editor.chain().focus()
+                                .setTabs([
+                                    { title: 'Tab 1', content: '<p>Tab 1 content</p>' },
+                                    { title: 'Tab 2', content: '<p>Tab 2 content</p>' }
+                                ]).run()}
                         />
 
                     </IconButtonGroup>
